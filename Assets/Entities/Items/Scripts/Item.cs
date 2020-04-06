@@ -1,7 +1,7 @@
-  
 using UnityEngine;
 
-public class Item : MonoBehaviour {
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item", order = 0)]
+public class Item : ScriptableObject {
     
 	new public string name = "New Item";	// Name of the item
 	public Sprite icon = null;				// Item icon
