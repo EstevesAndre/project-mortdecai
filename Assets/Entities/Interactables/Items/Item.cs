@@ -4,11 +4,14 @@ using UnityEngine;
 
 public enum CollectibleType { Feather }
 
-public class Item : MonoBehaviour, IInteractable
+[RequireComponent(typeof(Canvas))]
+public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 {
     #region Fields
 
     private CollectibleType type;
+    private SimplePrompt prompt;
+    private Canvas canvas;
 
     #endregion
 
@@ -28,6 +31,45 @@ public class Item : MonoBehaviour, IInteractable
     public void OnRange()
     {
         // TODO Display some sort of HUD indicating the item in question
+    }
+
+    #endregion
+
+    #region IHasUIPrompt Interface
+
+    public void ShowPrompt()
+    {
+        prompt.Enable();
+    }
+
+    public void HidePrompt()
+    {
+        prompt.Disable();
+    }
+
+    #endregion
+
+    #region Methods
+
+    public void Start()
+    {
+        // Add prompt to canvas
+        prompt.gameObject.transform.SetParent(canvas.gameObject.transform);
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<IPlayableEntity>() != null)
+        {
+            ShowPrompt();
+        }
+    }
+    public void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<IPlayableEntity>() != null)
+        {
+            HidePrompt();
+        }
     }
 
     #endregion
