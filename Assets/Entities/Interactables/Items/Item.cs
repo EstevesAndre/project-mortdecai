@@ -19,7 +19,6 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 
     public void OnInteract(GameObject entity)
     {
-        // send a message to the game manager saying that the player should collect an item of this type and put it in their inventory
         IInventorySystem inv = entity.GetComponent<IInventorySystem>();
         if (inv != null)
         {
@@ -30,7 +29,12 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 
     public void OnRange()
     {
-        // TODO Display some sort of HUD indicating the item in question
+        ShowPrompt();
+    }
+
+    public void OutOfRange()
+    {
+        HidePrompt();
     }
 
     #endregion
@@ -61,14 +65,14 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
     {
         if (collision.gameObject.GetComponent<IPlayableEntity>() != null)
         {
-            ShowPrompt();
+            OnRange();
         }
     }
     public void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.GetComponent<IPlayableEntity>() != null)
         {
-            HidePrompt();
+            OutOfRange();
         }
     }
 
