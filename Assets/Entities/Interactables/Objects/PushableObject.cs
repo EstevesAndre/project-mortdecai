@@ -41,5 +41,10 @@ public class PushableObject : MonoBehaviour, IInteractable
         // TODO Display some sort of HUD indicating the item in question
     }
 
+    public void OutOfRange()
+    {
+        // TODO Display some sort of HUD indicating the item in question
+    }
+
     #endregion
 }
