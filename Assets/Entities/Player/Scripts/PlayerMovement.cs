@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour {
     private Input controls;
     private Vector2 movementInput;
     public CharacterController characterController;
+    public bool isPlaying = false;
 
     public Vector3 velocity;
     public float gravity = -9.81f;
@@ -30,10 +32,12 @@ public class PlayerMovement : MonoBehaviour {
             velocity.y = -2f;
         }
 
-        float x = movementInput.x;
+        if (isPlaying) {
+            float x = movementInput.x;
 
-        Vector3 movement = new Vector3(x, 0f, 0f);
-        characterController.Move(movement * speed * Time.deltaTime);
+            Vector3 movement = new Vector3(x, 0f, 0f);
+            characterController.Move(movement * speed * Time.deltaTime);
+        }
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
@@ -43,6 +47,11 @@ public class PlayerMovement : MonoBehaviour {
         if (isGrounded) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+
+    public void TogglePlaying() {
+        isPlaying = !isPlaying;
+        gameObject.GetComponent<NavMeshAgent>().enabled = !gameObject.GetComponent<NavMeshAgent>().enabled;
     }
 
     void OnEnable() {

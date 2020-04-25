@@ -90,6 +90,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerManager",
+            "id": "06d060aa-1b97-45da-8a76-c996470a3d16",
+            "actions": [
+                {
+                    "name": "Switch",
+                    "type": "Button",
+                    "id": "f0a67f56-25f9-46ec-a505-c3aa68172fee",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "315842a9-73fe-4016-b6cf-83a22a9ff832",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and mouse",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
