@@ -1,17 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-[RequireComponent(typeof(Text))]
 public class SimplePrompt : MonoBehaviour, IToggableUI
 {
 
     #region Fields
-
-    private Text text;
-    private Image image;
 
     #endregion
 
@@ -19,14 +13,12 @@ public class SimplePrompt : MonoBehaviour, IToggableUI
 
     public void Enable()
     {
-        text.enabled = true;
-        image.enabled = true;
+        gameObject.SetActive(true);
     }
 
     public void Disable()
     {
-        text.enabled = false;
-        image.enabled = false;
+        gameObject.SetActive(false);
     }
 
     #endregion

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public enum CollectibleType { Feather }
 
-[RequireComponent(typeof(Canvas))]
+[RequireComponent(typeof(Collider))]
 public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 {
     #region Fields
 
     private CollectibleType type;
-    private SimplePrompt prompt;
-    private Canvas canvas;
+    public SimplePrompt prompt;
+    public Canvas canvas; // TODO
 
     #endregion
 
@@ -29,6 +29,7 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 
     public void OnRange()
     {
+        Debug.Log("Player in range of the item");
         ShowPrompt();
     }
 
@@ -58,17 +59,17 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
     public void Start()
     {
         // Add prompt to canvas
-        prompt.gameObject.transform.SetParent(canvas.gameObject.transform);
+        //prompt.gameObject.transform.SetParent(canvas.gameObject.transform);
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<IPlayableEntity>() != null)
         {
             OnRange();
         }
     }
-    public void OnCollisionExit(Collision collision)
+    public void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.GetComponent<IPlayableEntity>() != null)
         {
