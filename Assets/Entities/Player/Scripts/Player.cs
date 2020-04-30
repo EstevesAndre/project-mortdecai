@@ -50,6 +50,11 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
         interactablesInRange.Remove(interactable);
     }
 
+    public Input GetInputSystem()
+    {
+        return movement.GetControls();
+    }
+
     #endregion
 
     #region Methods

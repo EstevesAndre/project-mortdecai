@@ -17,6 +17,7 @@ public class PlayerMovingState : IState
     public void Enter()
     {
         Debug.Log("entering moving state");
+        owner.GetInputSystem().Player2D.Interaction.performed += _ => Interact();
     }
 
     public void Execute()
@@ -55,6 +56,14 @@ public class PlayerMovingState : IState
         {
             Debug.Log("Interactable out of range: " + interactable);
             owner.RemoveInteractableInRange(interactable);
+        }
+    }
+
+    public void Interact()
+    {
+        if (owner.GetInteractablesInRange()[0] != null)
+        {
+            owner.GetInteractablesInRange()[0].OnInteract(owner.gameObject);
         }
     }
 

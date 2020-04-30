@@ -17,6 +17,7 @@ public class PlayerIdleState : IState
     public void Enter()
     {
         Debug.Log("entering idle state");
+        owner.GetInputSystem().Player2D.Interaction.performed += _ => Interact();
     }
 
     public void Execute()
@@ -46,6 +47,14 @@ public class PlayerIdleState : IState
     public void OnTriggerExit(Collider collision)
     {
 
+    }
+
+    public void Interact()
+    {
+        if (owner.GetInteractablesInRange()[0] != null)
+        {
+            owner.GetInteractablesInRange()[0].OnInteract(owner.gameObject);
+        }
     }
 
     #endregion

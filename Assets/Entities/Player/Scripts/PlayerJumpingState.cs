@@ -17,6 +17,7 @@ public class PlayerJumpingState : IState
     public void Enter()
     {
         Debug.Log("entering idle state");
+        owner.GetInputSystem().Player2D.Interaction.performed += _ => Interact();
     }
 
     public void Execute()
@@ -31,6 +32,7 @@ public class PlayerJumpingState : IState
     public void Exit()
     {
         Debug.Log("exiting idle state");
+        owner.GetInputSystem().Player2D.Interaction.performed -= _ => Interact();
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -50,6 +52,14 @@ public class PlayerJumpingState : IState
         {
             Debug.Log("Interactable out of range: " + interactable);
             owner.RemoveInteractableInRange(interactable);
+        }
+    }
+
+    public void Interact()
+    {
+        if (owner.GetInteractablesInRange()[0] != null)
+        {
+            owner.GetInteractablesInRange()[0].OnInteract(owner.gameObject);
         }
     }
 

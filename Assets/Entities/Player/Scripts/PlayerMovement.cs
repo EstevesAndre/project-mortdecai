@@ -135,6 +135,10 @@ public class PlayerMovement : MonoBehaviour
         return jumpInput;
     }
 
+    public Input GetControls()
+    {
+        return controls;
+    }
     #endregion
 
 }
