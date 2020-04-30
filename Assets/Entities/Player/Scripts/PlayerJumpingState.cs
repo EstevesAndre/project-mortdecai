@@ -33,5 +33,25 @@ public class PlayerJumpingState : IState
         Debug.Log("exiting idle state");
     }
 
+    public void OnTriggerEnter(Collider collision)
+    {
+        IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            Debug.Log("Interactable in range: " + interactable);
+            owner.AddInteractableInRange(interactable);
+        }
+    }
+
+    public void OnTriggerExit(Collider collision)
+    {
+        IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            Debug.Log("Interactable out of range: " + interactable);
+            owner.RemoveInteractableInRange(interactable);
+        }
+    }
+
     #endregion
 }

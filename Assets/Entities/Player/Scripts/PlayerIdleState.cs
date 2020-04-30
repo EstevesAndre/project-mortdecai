@@ -38,6 +38,16 @@ public class PlayerIdleState : IState
         Debug.Log("exiting idle state");
     }
 
+    public void OnTriggerEnter(Collider collision)
+    {
+
+    }
+
+    public void OnTriggerExit(Collider collision)
+    {
+
+    }
+
     #endregion
 
 }

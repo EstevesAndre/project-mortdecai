@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
 
     private StateMachine stateMachine = new StateMachine();
     private PlayerMovement movement;
+    private List<IInteractable> interactablesInRange = new List<IInteractable>();
 
     #endregion
 
@@ -18,6 +19,35 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
     public void PlaceInInventory(CollectibleType item)
     {
         Debug.Log("Placed item in inventory: " + item);
+    }
+
+    #endregion
+
+    #region Getters and Setters
+
+    public PlayerMovement GetMovement()
+    {
+        return movement;
+    }
+
+    public StateMachine GetStateMachine()
+    {
+        return stateMachine;
+    }
+
+    public List<IInteractable> GetInteractablesInRange()
+    {
+        return interactablesInRange;
+    }
+
+    public void AddInteractableInRange(IInteractable interactable)
+    {
+        interactablesInRange.Add(interactable);
+    }
+
+    public void RemoveInteractableInRange(IInteractable interactable)
+    {
+        interactablesInRange.Remove(interactable);
     }
 
     #endregion
@@ -35,14 +65,14 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
         stateMachine.Update();
     }
 
-    public PlayerMovement GetMovement()
+    public void OnTriggerEnter(Collider collision)
     {
-        return movement;
+        stateMachine.OnTriggerEnter(collision);
     }
 
-    public StateMachine GetStateMachine()
+    public void OnTriggerExit(Collider collision)
     {
-        return stateMachine;
+        stateMachine.OnTriggerExit(collision);
     }
 
     #endregion
