@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 /* This object manages the inventory UI. */
 
+/*
 public class InventoryUI : MonoBehaviour
 {
 
@@ -21,13 +22,12 @@ public class InventoryUI : MonoBehaviour
     // Check to see if we should open/close the inventory
     void Update()
     {
-        /*
-		if (Input.GetButtonDown("Inventory"))
-		{
-			inventoryUI.SetActive(!inventoryUI.activeSelf);
+        
+		//if (Input.GetButtonDown("Inventory"))
+		//{
+		//	inventoryUI.SetActive(!inventoryUI.activeSelf);
 			UpdateUI();
-		}
-		*/
+		//}
     }
 
     // Update the inventory UI by:
@@ -52,3 +52,4 @@ public class InventoryUI : MonoBehaviour
     }
 
 }
+*/

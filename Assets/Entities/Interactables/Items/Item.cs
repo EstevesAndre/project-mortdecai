@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CollectibleType { Feather }
+public enum CollectibleType { Feather, Mushroom, Key }
 
 [RequireComponent(typeof(Collider))]
 public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 {
     #region Fields
 
-    private CollectibleType type;
+    public CollectibleType type;
     public SimplePrompt prompt;
     public Canvas canvas; // TODO
 
@@ -59,7 +59,7 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
     public void Start()
     {
         // Add prompt to canvas
-        //prompt.gameObject.transform.SetParent(canvas.gameObject.transform);
+        // prompt.gameObject.transform.SetParent(canvas.gameObject.transform);
     }
 
     public void OnTriggerEnter(Collider collision)
