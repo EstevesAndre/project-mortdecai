@@ -29,7 +29,6 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 
     public void OnRange()
     {
-        Debug.Log("Player in range of the item");
         ShowPrompt();
     }
 
@@ -58,6 +57,7 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 
     public void Start()
     {
+        // TODO
         // Add prompt to canvas
         // prompt.gameObject.transform.SetParent(canvas.gameObject.transform);
     }

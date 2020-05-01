@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerIdleState : IState
 {
@@ -16,14 +17,11 @@ public class PlayerIdleState : IState
     }
     public void Enter()
     {
-        Debug.Log("entering idle state");
-        owner.GetInputSystem().Player2D.Interaction.performed += _ => Interact();
+        owner.GetInputSystem().Player2D.Interaction.started += Interact;
     }
 
     public void Execute()
     {
-        Debug.Log("updating idle state");
-        Debug.Log(owner.GetMovement().GetMovement());
         if (owner.GetMovement().GetMovement() != Vector2.zero)
         {
             owner.GetStateMachine().SetState(new PlayerMovingState(owner));
@@ -36,7 +34,7 @@ public class PlayerIdleState : IState
 
     public void Exit()
     {
-        Debug.Log("exiting idle state");
+        owner.GetInputSystem().Player2D.Interaction.started -= Interact;
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -49,11 +47,17 @@ public class PlayerIdleState : IState
 
     }
 
-    public void Interact()
+    public void Interact(InputAction.CallbackContext context)
     {
-        if (owner.GetInteractablesInRange()[0] != null)
+        Debug.Log("Interact was called in idle state: " + owner.GetInteractablesInRange().Count);
+        if (owner.GetInteractablesInRange().Count >= 1)
         {
-            owner.GetInteractablesInRange()[0].OnInteract(owner.gameObject);
+            IInteractable toInteract = owner.GetInteractablesInRange()[0];
+            if (toInteract != null)
+            {
+                toInteract.OnInteract(owner.gameObject);
+                owner.RemoveInteractableInRange(toInteract);
+            }
         }
     }
 

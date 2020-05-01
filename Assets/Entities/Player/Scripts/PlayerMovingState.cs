@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovingState : IState
 {
@@ -16,13 +17,11 @@ public class PlayerMovingState : IState
     }
     public void Enter()
     {
-        Debug.Log("entering moving state");
-        owner.GetInputSystem().Player2D.Interaction.performed += _ => Interact();
+        owner.GetInputSystem().Player2D.Interaction.started += Interact;
     }
 
     public void Execute()
     {
-        Debug.Log("updating moving state");
         if (owner.GetMovement().GetJump() > Mathf.Epsilon)
         {
             owner.GetStateMachine().SetState(new PlayerJumpingState(owner));
@@ -36,7 +35,8 @@ public class PlayerMovingState : IState
 
     public void Exit()
     {
-        Debug.Log("exiting moving state");
+        // Debug.Log("exiting moving state");
+        owner.GetInputSystem().Player2D.Interaction.started -= Interact;
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -44,7 +44,6 @@ public class PlayerMovingState : IState
         IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
         if (interactable != null)
         {
-            Debug.Log("Interactable in range: " + interactable);
             owner.AddInteractableInRange(interactable);
         }
     }
@@ -54,16 +53,22 @@ public class PlayerMovingState : IState
         IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
         if (interactable != null)
         {
-            Debug.Log("Interactable out of range: " + interactable);
             owner.RemoveInteractableInRange(interactable);
         }
     }
 
-    public void Interact()
+    public void Interact(InputAction.CallbackContext context)
     {
-        if (owner.GetInteractablesInRange()[0] != null)
+        Debug.Log("Interact was called in moving state");
+        if (owner.GetInteractablesInRange().Count >= 1)
         {
-            owner.GetInteractablesInRange()[0].OnInteract(owner.gameObject);
+            IInteractable toInteract = owner.GetInteractablesInRange()[0];
+            if (toInteract != null)
+            {
+                toInteract.OnInteract(owner.gameObject);
+                owner.RemoveInteractableInRange(toInteract);
+            }
+
         }
     }
 
