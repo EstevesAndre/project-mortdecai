@@ -4,9 +4,9 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     GameObject player;
-    public NavMeshAgent agent;
     bool playerInTerritory;
     Vector3 initialPosition;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -19,13 +19,15 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInTerritory == true)
+        if (playerInTerritory == true && Vector3.Distance(transform.position, player.transform.position) > 1f)
         {
-            agent.SetDestination(player.transform.position);
+            transform.LookAt(new Vector3(player.transform.position.x,0,0));
+            transform.position += transform.forward*speed*Time.deltaTime;
         }
-        else if (!playerInTerritory && !transform.position.Equals(initialPosition))
+        else if (!playerInTerritory && Vector3.Distance(initialPosition, transform.position) > 1f)
         {
-            agent.SetDestination(initialPosition);
+            transform.LookAt(initialPosition);
+            transform.position += transform.forward*speed*Time.deltaTime;
         }
     }
     
@@ -41,7 +43,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject == player) 
         {
-                playerInTerritory = false;
+            playerInTerritory = false;
         }
     }
 }
