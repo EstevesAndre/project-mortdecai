@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class PlayerMovement : MonoBehaviour {
     private Input controls;
     private Vector2 movementInput;
-    public CharacterController characterController;
+    public Rigidbody rb;
     public bool isPlaying = false;
 
     public Vector3 velocity;
@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void Update() {
+        velocity.x = 0f;
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0) {
             velocity.y = -2f;
@@ -34,24 +36,26 @@ public class PlayerMovement : MonoBehaviour {
 
         if (isPlaying) {
             float x = movementInput.x;
-
-            Vector3 movement = new Vector3(x, 0f, 0f);
-            characterController.Move(movement * speed * Time.deltaTime);
+            velocity.x = x * speed;
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
+        if (!isGrounded) {
+            velocity.y += gravity * Time.deltaTime;
+        }
+    }
+
+    void FixedUpdate() {
+        rb.velocity = velocity;
     }
 
     private void Jump() {
-        if (isGrounded) {
+        if (isGrounded && isPlaying) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 
     public void TogglePlaying() {
         isPlaying = !isPlaying;
-        gameObject.GetComponent<NavMeshAgent>().enabled = !gameObject.GetComponent<NavMeshAgent>().enabled;
     }
 
     void OnEnable() {
