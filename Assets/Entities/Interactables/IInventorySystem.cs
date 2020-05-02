@@ -2,5 +2,5 @@
 
 public interface IInventorySystem
 {
-    void PlaceInInventory(CollectibleType item);
+    void PlaceInInventory(InventoryItem item);
 }

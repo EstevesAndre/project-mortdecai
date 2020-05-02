@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum CollectibleType { Feather, Mushroom, Key }
 
@@ -9,6 +10,7 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 {
     #region Fields
 
+    public InventoryItem inventoryItem;
     public CollectibleType type;
     public SimplePrompt prompt;
     public Canvas canvas; // TODO
@@ -19,10 +21,11 @@ public class Item : MonoBehaviour, IInteractable, IHasUIPrompt
 
     public void OnInteract(GameObject entity)
     {
+        Debug.Log("OnInteract of item called");
         IInventorySystem inv = entity.GetComponent<IInventorySystem>();
         if (inv != null)
         {
-            inv.PlaceInInventory(type);
+            inv.PlaceInInventory(inventoryItem);
         }
         Destroy(gameObject);
     }

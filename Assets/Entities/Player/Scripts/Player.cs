@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
 
     #region IInventorySystem Interface
 
-    public void PlaceInInventory(CollectibleType item)
+    public void PlaceInInventory(InventoryItem item)
     {
         inventory.AddItem(item);
     }
@@ -45,6 +45,11 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
     public Input GetInputSystem()
     {
         return movement.GetControls();
+    }
+
+    public InventorySystem GetInventorySystem()
+    {
+        return inventory;
     }
 
     #endregion

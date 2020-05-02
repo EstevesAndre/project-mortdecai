@@ -6,24 +6,42 @@ public class InventorySystem
 {
     #region Fields
 
-    private List<CollectibleType> items = new List<CollectibleType>();
+    private int size = 10;
+    private List<InventoryItem> items = new List<InventoryItem>();
+
+    #endregion
+
+    #region Delegates
+
+    public delegate void OnChange();
+    public OnChange OnChangeCallback;
 
     #endregion
 
     #region Getters and Setters
 
-    public List<CollectibleType> GetItems()
+    public List<InventoryItem> GetItems()
     {
         return items;
+    }
+
+    public int GetCount()
+    {
+        return items.Count;
     }
 
     #endregion
 
     #region Methods
 
-    public void AddItem(CollectibleType itemToAdd)
+    public void AddItem(InventoryItem itemToAdd)
     {
+        Debug.Log("Adding item to inventory: " + itemToAdd.type);
         items.Add(itemToAdd);
+        if (OnChangeCallback != null)
+        {
+            OnChangeCallback.Invoke();
+        }
     }
 
     public void RemoveItem(int indexToRemove)
@@ -32,12 +50,7 @@ public class InventorySystem
         // Attach the corrresponding Item component TODO
         // Place it near the player (?) TODO
         items.RemoveAt(indexToRemove);
-    }
-
-    public void UseItem(int indexToUse)
-    {
-        // ?? TODO
-        items.RemoveAt(indexToUse);
+        OnChangeCallback.Invoke();
     }
 
     #endregion
