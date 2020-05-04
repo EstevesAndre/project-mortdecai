@@ -3,24 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
-public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
+public class Player : MonoBehaviour, IPlayableEntity
 {
 
     #region Fields
 
     private StateMachine stateMachine = new StateMachine();
     private PlayerMovement movement;
-    private List<IInteractable> interactablesInRange = new List<IInteractable>();
-    private InventorySystem inventory = new InventorySystem();
-
-    #endregion
-
-    #region IInventorySystem Interface
-
-    public void PlaceInInventory(InventoryItem item)
-    {
-        inventory.AddItem(item);
-    }
+    private List<GameObject> interactablesInRange = new List<GameObject>();
+    [SerializeField]
+    private InventoryObject inventory;
 
     #endregion
 
@@ -36,32 +28,32 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
         return stateMachine;
     }
 
-    public List<IInteractable> GetInteractablesInRange()
+    public List<GameObject> GetInteractablesInRange()
     {
         return interactablesInRange;
     }
 
+    public InventoryObject GetInventory()
+    {
+        return inventory;
+    }
 
     public Input GetInputSystem()
     {
         return movement.GetControls();
     }
 
-    public InventorySystem GetInventorySystem()
-    {
-        return inventory;
-    }
-
     #endregion
 
     #region Interactables
 
-    public void AddInteractableInRange(IInteractable interactable)
+    public void AddInteractableInRange(GameObject interactable)
     {
+        Debug.Log("Adding interactable in range");
         interactablesInRange.Add(interactable);
     }
 
-    public void RemoveInteractableInRange(IInteractable interactable)
+    public void RemoveInteractableInRange(GameObject interactable)
     {
         interactablesInRange.Remove(interactable);
     }
@@ -91,5 +83,9 @@ public class Player : MonoBehaviour, IPlayableEntity, IInventorySystem
         stateMachine.OnTriggerExit(collision);
     }
 
+    private void OnApplicationQuit()
+    {
+        inventory.container.Clear();
+    }
     #endregion
 }
