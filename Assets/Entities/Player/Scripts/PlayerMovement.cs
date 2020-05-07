@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class PlayerMovement : MonoBehaviour {
     private Input controls;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
+        Physics.IgnoreCollision(GetComponent<Collider>(), otherPlayer.GetComponent<Collider>(), true);
         controls = new Input();
         controls.Player2D.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         controls.Player2D.Jump.performed += _ => Jump();
@@ -61,6 +63,10 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate() {
         if (isPlaying) {
+            Vector3 direction = Vector3.right * Math.Sign(velocity.x);
+            if (direction != Vector3.zero) {
+                rb.rotation = Quaternion.LookRotation(direction);
+            }
             rb.velocity = velocity;
         }
     }
