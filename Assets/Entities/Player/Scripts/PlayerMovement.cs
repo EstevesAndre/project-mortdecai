@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using System;
 
 public class PlayerMovement : MonoBehaviour {
     private Input controls;
     private Vector2 movementInput;
-    public CharacterController characterController;
+    public Rigidbody rb;
+    public bool isPlaying = false;
 
-    public Vector3 velocity;
+    private Vector3 velocity;
     public float gravity = -9.81f;
     public float speed = 12f;
 
@@ -17,31 +20,65 @@ public class PlayerMovement : MonoBehaviour {
     private bool isGrounded;
     public float jumpHeight = 3f;
 
+    private NavMeshAgent agent;
+    public float playerDistance = 2f;
+    public LayerMask playerMask;
+    public Transform otherPlayer;
+
     private void Awake() {
+        agent = GetComponent<NavMeshAgent>();
+        Physics.IgnoreCollision(GetComponent<Collider>(), otherPlayer.GetComponent<Collider>(), true);
         controls = new Input();
         controls.Player2D.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         controls.Player2D.Jump.performed += _ => Jump();
     }
 
     void Update() {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded && velocity.y < 0) {
-            velocity.y = -2f;
+        if (isPlaying) {
+            velocity.x = 0f;
+
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            if (isGrounded && velocity.y < 0) {
+                velocity.y = -2f;
+            }
+
+            float x = movementInput.x;
+            velocity.x = x * speed;
+
+            if (!isGrounded) {
+                velocity.y += gravity * Time.deltaTime;
+            }
+        } else {
+            bool isClose = Physics.CheckSphere(transform.position, playerDistance, playerMask);
+
+            if (!isClose) {
+                agent.SetDestination(otherPlayer.position);
+            } else if (!agent.isStopped) {
+                agent.isStopped = true;
+                agent.ResetPath();
+            }
         }
+    }
 
-        float x = movementInput.x;
-
-        Vector3 movement = new Vector3(x, 0f, 0f);
-        characterController.Move(movement * speed * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
+    void FixedUpdate() {
+        if (isPlaying) {
+            Vector3 direction = Vector3.right * Math.Sign(velocity.x);
+            if (direction != Vector3.zero) {
+                rb.rotation = Quaternion.LookRotation(direction);
+            }
+            rb.velocity = velocity;
+        }
     }
 
     private void Jump() {
         if (isGrounded) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+
+    public void TogglePlaying() {
+        isPlaying = !isPlaying;
+        agent.enabled = !agent.enabled;
     }
 
     void OnEnable() {

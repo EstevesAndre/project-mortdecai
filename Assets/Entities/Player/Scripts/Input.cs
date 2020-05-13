@@ -103,6 +103,33 @@ public class @Input : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerManager"",
+            ""id"": ""06d060aa-1b97-45da-8a76-c996470a3d16"",
+            ""actions"": [
+                {
+                    ""name"": ""Switch"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0a67f56-25f9-46ec-a505-c3aa68172fee"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""315842a9-73fe-4016-b6cf-83a22a9ff832"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and mouse"",
+                    ""action"": ""Switch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -128,6 +155,9 @@ public class @Input : IInputActionCollection, IDisposable
         m_Player2D = asset.FindActionMap("Player2D", throwIfNotFound: true);
         m_Player2D_Movement = m_Player2D.FindAction("Movement", throwIfNotFound: true);
         m_Player2D_Jump = m_Player2D.FindAction("Jump", throwIfNotFound: true);
+        // PlayerManager
+        m_PlayerManager = asset.FindActionMap("PlayerManager", throwIfNotFound: true);
+        m_PlayerManager_Switch = m_PlayerManager.FindAction("Switch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -214,6 +244,39 @@ public class @Input : IInputActionCollection, IDisposable
         }
     }
     public Player2DActions @Player2D => new Player2DActions(this);
+
+    // PlayerManager
+    private readonly InputActionMap m_PlayerManager;
+    private IPlayerManagerActions m_PlayerManagerActionsCallbackInterface;
+    private readonly InputAction m_PlayerManager_Switch;
+    public struct PlayerManagerActions
+    {
+        private @Input m_Wrapper;
+        public PlayerManagerActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Switch => m_Wrapper.m_PlayerManager_Switch;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerManager; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerManagerActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerManagerActions instance)
+        {
+            if (m_Wrapper.m_PlayerManagerActionsCallbackInterface != null)
+            {
+                @Switch.started -= m_Wrapper.m_PlayerManagerActionsCallbackInterface.OnSwitch;
+                @Switch.performed -= m_Wrapper.m_PlayerManagerActionsCallbackInterface.OnSwitch;
+                @Switch.canceled -= m_Wrapper.m_PlayerManagerActionsCallbackInterface.OnSwitch;
+            }
+            m_Wrapper.m_PlayerManagerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Switch.started += instance.OnSwitch;
+                @Switch.performed += instance.OnSwitch;
+                @Switch.canceled += instance.OnSwitch;
+            }
+        }
+    }
+    public PlayerManagerActions @PlayerManager => new PlayerManagerActions(this);
     private int m_KeyboardandmouseSchemeIndex = -1;
     public InputControlScheme KeyboardandmouseScheme
     {
@@ -227,5 +290,9 @@ public class @Input : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IPlayerManagerActions
+    {
+        void OnSwitch(InputAction.CallbackContext context);
     }
 }
