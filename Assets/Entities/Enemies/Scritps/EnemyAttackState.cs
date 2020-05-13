@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class PlagueAttackState : IStateEnemy
+public class EnemyAttackState : IStateEnemy
 {
     #region Fields
 
-    protected Plague owner;
+    protected DefaultEnemy owner;
 
     #endregion
 
     #region Constructor
 
-    public PlagueAttackState(Plague _owner)
+    public EnemyAttackState(DefaultEnemy _owner)
     {
         owner = _owner;
     }
@@ -37,14 +37,14 @@ public class PlagueAttackState : IStateEnemy
             }
             else
             {
-                // TODO do something to the target
                 owner.GetAnimator().SetBool("attack", true);
+                owner.PerformAttack();
                 owner.ResetTimeToAttack();
             }
         }
         else
         {
-            owner.GetStateMachineEnemy().SetState(new PlagueMovingState(owner));
+            owner.GetStateMachineEnemy().SetState(new EnemyMovingState(owner));
         }
     }
 

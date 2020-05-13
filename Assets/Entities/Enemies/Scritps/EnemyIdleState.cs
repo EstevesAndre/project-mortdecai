@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class PlagueIdleState : IStateEnemy
+public class EnemyIdleState : IStateEnemy
 {
     #region Fields
 
-    protected Plague owner;
+    protected DefaultEnemy owner;
 
     #endregion
 
     #region Constructor
 
-    public PlagueIdleState(Plague _owner)
+    public EnemyIdleState(DefaultEnemy _owner)
     {
         owner = _owner;
     }
@@ -28,11 +28,11 @@ public class PlagueIdleState : IStateEnemy
     {
         if(owner.GetTargetInTerritory())
         {
-            owner.GetStateMachineEnemy().SetState(new PlagueMovingState(owner));
+            owner.GetStateMachineEnemy().SetState(new EnemyMovingState(owner));
         }
         else if(owner.InRangeToAttack())
         {
-            owner.GetStateMachineEnemy().SetState(new PlagueAttackState(owner));
+            owner.GetStateMachineEnemy().SetState(new EnemyAttackState(owner));
         }
     }
 

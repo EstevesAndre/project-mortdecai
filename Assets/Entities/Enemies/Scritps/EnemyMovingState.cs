@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class PlagueMovingState : IStateEnemy
+public class EnemyMovingState : IStateEnemy
 {
     #region Fields
 
-    protected Plague owner;
+    protected DefaultEnemy owner;
 
     #endregion
 
     #region Constructor
 
-    public PlagueMovingState(Plague _owner)
+    public EnemyMovingState(DefaultEnemy _owner)
     {
         owner = _owner;
     }
@@ -30,7 +30,7 @@ public class PlagueMovingState : IStateEnemy
         {
             if(owner.InRangeToAttack())
             {
-                owner.GetStateMachineEnemy().SetState(new PlagueAttackState(owner));
+                owner.GetStateMachineEnemy().SetState(new EnemyAttackState(owner));
             }
             else if(owner.GetDistanceFromTarget() > 1f)
             {
@@ -45,7 +45,7 @@ public class PlagueMovingState : IStateEnemy
         }
         else
         {
-            owner.GetStateMachineEnemy().SetState(new PlagueIdleState(owner));
+            owner.GetStateMachineEnemy().SetState(new EnemyIdleState(owner));
         }
     }
 
