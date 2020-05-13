@@ -30,6 +30,10 @@ public class PlagueIdleState : IStateEnemy
         {
             owner.GetStateMachineEnemy().SetState(new PlagueMovingState(owner));
         }
+        else if(owner.InRangeToAttack())
+        {
+            owner.GetStateMachineEnemy().SetState(new PlagueAttackState(owner));
+        }
     }
 
     public void Exit()

@@ -21,14 +21,14 @@ public class PlagueAttackState : IStateEnemy
 
     public void Enter()
     {
-
+        owner.GetTransform().LookAt(new Vector3(owner.GetTarget().transform.position.x, 0, 0));
     }
 
     public void Execute()
     {
         if (owner.InRangeToAttack())
         {
-            Debug.Log(owner.GetTimeToAttack());
+            owner.GetTransform().LookAt(new Vector3(owner.GetTarget().transform.position.x, 0, 0));
 
             if (owner.GetTimeToAttack() > 0)
             {
