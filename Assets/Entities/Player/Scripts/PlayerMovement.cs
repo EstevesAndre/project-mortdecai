@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 velocity;
     public float gravity = -9.81f;
     public float speed = 12f;
+    private Animator animator;
 
     public Transform groundCheck;
     public float groundDistance = 0.1f;
@@ -24,9 +25,11 @@ public class PlayerMovement : MonoBehaviour {
     public float playerDistance = 2f;
     public LayerMask playerMask;
     public Transform otherPlayer;
+    
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         Physics.IgnoreCollision(GetComponent<Collider>(), otherPlayer.GetComponent<Collider>(), true);
         controls = new Input();
         controls.Player2D.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
@@ -40,10 +43,15 @@ public class PlayerMovement : MonoBehaviour {
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             if (isGrounded && velocity.y < 0) {
                 velocity.y = -2f;
+                animator.SetBool("Falling", false);
+            } else if (!isGrounded && velocity.y < 0) {
+                animator.SetBool("Jumping", false);
+                animator.SetBool("Falling", true);
             }
 
             float x = movementInput.x;
             velocity.x = x * speed;
+            animator.SetFloat("Speed", Math.Abs(velocity.x));
 
             if (!isGrounded) {
                 velocity.y += gravity * Time.deltaTime;
@@ -73,6 +81,7 @@ public class PlayerMovement : MonoBehaviour {
     private void Jump() {
         if (isGrounded) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            animator.SetBool("Jumping", true);
         }
     }
 
