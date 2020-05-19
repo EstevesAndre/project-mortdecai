@@ -12,26 +12,31 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movementInput;
     public Rigidbody rb;
     public bool isPlaying = false;
-
-    private float jumpInput;
-    public CharacterController characterController;
+    private bool isSwimming = false;
 
     private Vector3 velocity;
     public float gravity = -9.81f;
+    public float waterGravity = -1f;
     public float speed = 12f;
-    private Animator animator;
 
     public Transform groundCheck;
     public float groundDistance = 0.1f;
     public LayerMask groundMask;
+    public LayerMask waterMask;
     private bool isGrounded;
     public float jumpHeight = 3f;
+    private float jumpInput;
 
     private NavMeshAgent agent;
     public float playerDistance = 2f;
     public LayerMask playerMask;
     public Transform otherPlayer;
+    
+    private Animator animator;
 
+    #endregion
+
+    #region Methods
 
     private void Awake()
     {
@@ -50,23 +55,33 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.x = 0f;
 
-            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-            if (isGrounded && velocity.y < 0)
+            if (!isSwimming)
             {
-                velocity.y = -2f;
-                animator.SetBool("Falling", false);
+                isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+                if (isGrounded && velocity.y < 0)
+                {
+                    velocity.y = -2f;
+                    animator.SetBool("Falling", false);
+                }
+                else if (!isGrounded && velocity.y < 0)
+                {
+                    animator.SetBool("Jumping", false);
+                    animator.SetBool("Falling", true);
+                }
             }
-            else if (!isGrounded && velocity.y < 0)
-            {
-                animator.SetBool("Jumping", false);
-                animator.SetBool("Falling", true);
-            }
+            
 
             float x = movementInput.x;
             velocity.x = x * speed;
             animator.SetFloat("Speed", Math.Abs(velocity.x));
 
-            if (!isGrounded)
+            if (isSwimming)
+            {
+                float y = movementInput.y;
+                velocity.y = (y * speed) + waterGravity;
+            }
+
+            if (!isGrounded && !isSwimming)
             {
                 velocity.y += gravity * Time.deltaTime;
             }
@@ -100,6 +115,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            SetSwimming(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            SetSwimming(false);
+        }
+    }
+
     private void Jump()
     {
         if (isGrounded)
@@ -115,14 +146,9 @@ public class PlayerMovement : MonoBehaviour
         agent.enabled = !agent.enabled;
     }
 
-    void OnEnable()
+    private void SetSwimming(bool isSwimming)
     {
-        controls.Enable();
-    }
-
-    void OnDisable()
-    {
-        controls.Disable();
+        this.isSwimming = isSwimming;
     }
 
     public Vector2 GetMovement()
@@ -139,7 +165,17 @@ public class PlayerMovement : MonoBehaviour
     {
         return controls;
     }
-    #endregion
 
+    void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Disable();
+    }
+
+    #endregion
 }
 
