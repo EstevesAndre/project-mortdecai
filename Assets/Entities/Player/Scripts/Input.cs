@@ -193,11 +193,11 @@ public class @Input : IInputActionCollection, IDisposable
         m_Player2D = asset.FindActionMap("Player2D", throwIfNotFound: true);
         m_Player2D_Movement = m_Player2D.FindAction("Movement", throwIfNotFound: true);
         m_Player2D_Jump = m_Player2D.FindAction("Jump", throwIfNotFound: true);
+        m_Player2D_Interaction = m_Player2D.FindAction("Interaction", throwIfNotFound: true);
+        m_Player2D_UI = m_Player2D.FindAction("UI", throwIfNotFound: true);
         // PlayerManager
         m_PlayerManager = asset.FindActionMap("PlayerManager", throwIfNotFound: true);
         m_PlayerManager_Switch = m_PlayerManager.FindAction("Switch", throwIfNotFound: true);
-        m_Player2D_Interaction = m_Player2D.FindAction("Interaction", throwIfNotFound: true);
-        m_Player2D_UI = m_Player2D.FindAction("UI", throwIfNotFound: true);
     }
 
     public void Dispose()
