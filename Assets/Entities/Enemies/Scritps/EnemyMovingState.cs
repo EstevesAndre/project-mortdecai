@@ -34,14 +34,12 @@ public class EnemyMovingState : IStateEnemy
             }
             else if(owner.GetDistanceFromTarget() > 1f)
             {
-                owner.GetTransform().LookAt(new Vector3(owner.GetTarget().transform.position.x, 0, owner.GetTarget().transform.position.z));
-                owner.GetTransform().position += owner.GetTransform().forward*owner.GetSpeed()*Time.deltaTime;
+                owner.GetAgent().SetDestination(owner.GetTarget().transform.position);
             }
         }
         else if(!owner.GetTargetInTerritory() && owner.GetDistanceFromInitialPos() > 1f)
         {
-            owner.GetTransform().LookAt(owner.GetInitialPosition());
-            owner.GetTransform().position += owner.GetTransform().forward*owner.GetSpeed()*Time.deltaTime;
+            owner.GetAgent().SetDestination(owner.GetInitialPosition());
         }
         else
         {
@@ -52,6 +50,8 @@ public class EnemyMovingState : IStateEnemy
     public void Exit()
     {
         owner.GetAnimator().SetFloat("speed", 0.0f);
+        owner.GetAgent().isStopped = true;
+        owner.GetAgent().ResetPath();
     }
 
     public void OnTriggerEnter(Collider collision)

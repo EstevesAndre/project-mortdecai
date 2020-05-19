@@ -10,12 +10,13 @@ public class DefaultEnemy : MonoBehaviour
     protected Animator animator;
     protected float timeToAttack;
     protected bool targetInTerritory;
+    protected NavMeshAgent agent;
     public GameObject target;
-    public float speed;
     public float attackRange;
     public float damageOnHit; // assuming each enemy has only one hability
     public float attackRate; // time between two attacks
     
+
     #endregion
 
 
@@ -36,6 +37,11 @@ public class DefaultEnemy : MonoBehaviour
         return animator;
     }
 
+    public NavMeshAgent GetAgent()
+    {
+        return agent;
+    }
+
     public GameObject GetTarget()
     {
         return target;
@@ -49,11 +55,6 @@ public class DefaultEnemy : MonoBehaviour
     public void SetTargetInTerritory(bool _bool)
     {
         targetInTerritory = _bool;
-    }
-
-    public float GetSpeed()
-    {
-        return speed;
     }
 
     public float GetDamageOnHit()
@@ -110,6 +111,7 @@ public class DefaultEnemy : MonoBehaviour
     {
         initialPosition = transform.position;
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
         timeToAttack = 0f;
     }
 
