@@ -34,7 +34,7 @@ public class EnemyMovingState : IStateEnemy
             }
             else if(owner.GetDistanceFromTarget() > 1f)
             {
-                owner.GetTransform().LookAt(new Vector3(owner.GetTarget().transform.position.x, 0, 0));
+                owner.GetTransform().LookAt(new Vector3(owner.GetTarget().transform.position.x, 0, owner.GetTarget().transform.position.z));
                 owner.GetTransform().position += owner.GetTransform().forward*owner.GetSpeed()*Time.deltaTime;
             }
         }
