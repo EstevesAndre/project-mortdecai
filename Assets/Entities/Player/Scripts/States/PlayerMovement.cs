@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && !isSwimming)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             animator.SetBool("Jumping", true);
@@ -149,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
     private void SetSwimming(bool isSwimming)
     {
         this.isSwimming = isSwimming;
+        animator.SetBool("Swimming", isSwimming);
     }
 
     public Vector2 GetMovement()
