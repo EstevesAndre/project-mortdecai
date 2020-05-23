@@ -12,7 +12,7 @@ public class JumpMushroom : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         animator.SetTrigger("activated");
-        //other.gameObject.GetComponent<Rigidbody>().AddForce(100*transform.up,ForceMode.VelocityChange);
-        other.gameObject.transform.position += 300 * Vector3.up * Time.deltaTime;
+        other.gameObject.GetComponent<PlayerMovement>().MushroomJump();
     }
+
 }

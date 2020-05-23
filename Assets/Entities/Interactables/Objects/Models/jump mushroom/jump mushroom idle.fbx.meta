@@ -1,11 +1,8 @@
 fileFormatVersion: 2
-guid: 2021993f0a5f0374cbd2cf928af75e23
+guid: e5fcb8f45f1106d4c81f52118b194ad1
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable:
-  - first:
-      74: -8639993316982285888
-    second: Armature.001|ArmatureAction.001
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -39,7 +36,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
