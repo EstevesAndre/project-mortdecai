@@ -14,10 +14,10 @@ public class GiveObjective : QuestObjective
         countToGive = _countToGive;
         description = _description;
         isCompleted = false;
-        
+
         text = _transform.GetChild(_index).GetComponent<TextMeshProUGUI>();
     }
-    
+
     public override void UpdateUI(Player player)
     {
 
@@ -26,11 +26,5 @@ public class GiveObjective : QuestObjective
     public override void PrintUI(Player player)
     {
 
-    }
-
-    public override void Clear()
-    {
-        text.enabled = false;
-        text.text = "";
     }
 }

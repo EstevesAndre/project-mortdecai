@@ -23,13 +23,13 @@ public class CollectObjective : QuestObjective
     {
         itemCount = 0;
 
-        foreach(InventorySlot item in player.GetInventory().container)
+        foreach (InventorySlot item in player.GetInventory().container)
         {
-            if(item.item.name == itemToCollect)
-                itemCount++;
+            if (item.item.name == itemToCollect)
+                itemCount = item.amount;
         }
 
-        if(itemCount >= targetItemCount)
+        if (itemCount >= targetItemCount)
         {
             isCompleted = true;
         }
@@ -39,13 +39,6 @@ public class CollectObjective : QuestObjective
 
     public override void PrintUI(Player player)
     {
-        text.enabled = true;
         text.text = description + " (" + (itemCount > targetItemCount ? targetItemCount : itemCount) + "/" + targetItemCount + ")";
-    }
-    
-    public override void Clear()
-    {
-        text.enabled = false;
-        text.text = "";
     }
 }

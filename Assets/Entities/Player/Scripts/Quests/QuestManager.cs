@@ -6,11 +6,10 @@ using TMPro;
 public class QuestManager : MonoBehaviour
 {
     public Player player;
-    private int questIndex;
     private List<Quest> quests;
     private bool finished;
     public int zone;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +17,8 @@ public class QuestManager : MonoBehaviour
 
         quests.Add(new Quest(
             transform,
-            1,
-            "Quest 1",
+            0,
+            "Quest 1323121",
             new List<QuestObjective>() {
                 new CollectObjective(transform, 1, "Find mushrooms", 1, "strawberry"),
                 new CollectObjective(transform, 2, "Find invisibility feather", 1, "invisibilityFeather")
@@ -27,58 +26,74 @@ public class QuestManager : MonoBehaviour
         ));
         quests.Add(new Quest(
             transform,
-            2,
-            "Quest 1",
+            1,
+            "Quest ASDASD1",
             new List<QuestObjective>() {
-                new CollectObjective(transform, 1, "Find mushrooms", 1, "strawberry"),
-                new CollectObjective(transform, 2, "Find invisibility feather", 1, "invisibilityFeather")
+                new CollectObjective(transform, 1, "Find mushrooms", 10, "strawberry"),
+                new CollectObjective(transform, 2, "Find invisibility feather", 6, "invisibilityFeather")
             }
         ));
         Debug.Log(quests.Count);
-        
-        questIndex = 0;
-        zone = 1;
+
+        zone = 0;
         finished = false;
+        clearUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Print All quests are completed
-        if (quests.Count == questIndex)
+        if (finished)
         {
-            if (finished) {
-                return;
-            }
+            return;
+        }
 
+        quests[zone].UpdateUI(player);
+    }
+
+    public void setZone(int _zone)
+    {
+        zone = _zone;
+        clearUI();
+    }
+
+    private void clearUI()
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<TextMeshProUGUI>().text = "";
+        }
+    }
+
+    public void verifyAllQuests()
+    {
+        bool finished_ = true;
+        // Print All quests are completed
+        foreach (Quest quest in quests)
+        {
+            if (!quest.isCompleted)
+                finished_ = false;
+        }
+
+        finished = finished_;
+
+        if (finished)
+        {
             int count = 1;
-            foreach (Transform child in transform) {
+            foreach (Transform child in transform)
+            {
 
-                if(count == transform.childCount) {
+                if (count == transform.childCount)
+                {
                     child.GetComponent<TextMeshProUGUI>().enabled = true;
+                    child.GetComponent<TextMeshProUGUI>().text = "All quests complete!";
                 }
-                else {
+                else
+                {
                     child.GetComponent<TextMeshProUGUI>().enabled = false;
                 }
 
                 count++;
-            }
-            finished = true;
-        }
-        else if (!quests[questIndex].isCompleted)
-        {
-            quests[questIndex].UpdateUI(player);
-        }
-        else
-        {
-            if (questIndex + 1 >= quests.Count)
-            {
-                questIndex++;
-            }
-            else if (quests[questIndex + 1].zone == zone)
-            {
-                Debug.Log("HERE");
-                questIndex++;
             }
         }
     }

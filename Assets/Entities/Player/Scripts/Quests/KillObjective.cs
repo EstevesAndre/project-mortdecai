@@ -14,23 +14,17 @@ public class KillObjective : QuestObjective
         numberOfKills = _numberOfKills;
         description = _description;
         isCompleted = false;
-        
+
         text = _transform.GetChild(_index).GetComponent<TextMeshProUGUI>();
     }
 
     public override void UpdateUI(Player player)
     {
-        
+
     }
-    
+
     public override void PrintUI(Player player)
     {
 
-    }
-
-    public override void Clear()
-    {
-        text.enabled = false;
-        text.text = "";
     }
 }

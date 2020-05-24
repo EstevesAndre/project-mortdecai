@@ -5,53 +5,49 @@ using TMPro;
 
 public class Quest
 {
+    private Transform transform;
     public string title;
     public int zone;
     public List<QuestObjective> objectives;
     public bool isCompleted;
     private TextMeshProUGUI titleMesh;
 
-    public Quest(Transform transform, int _zone, string _title, List<QuestObjective> _objectives)
+    public Quest(Transform _transform, int _zone, string _title, List<QuestObjective> _objectives)
     {
+        transform = _transform;
         title = _title;
         zone = _zone;
         objectives = _objectives;
 
         isCompleted = false;
-        titleMesh = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        titleMesh = _transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     public void UpdateUI(Player player)
     {
-        if (isCompleted) {
-            foreach(QuestObjective obj in objectives) {
-                obj.PrintUI(player);
-            }
-               
+        if (isCompleted)
             return;
-        }
-        
-        bool check = true;
+
         titleMesh.text = title;
 
-        foreach(QuestObjective obj in objectives)
+        bool check = true;
+
+        foreach (QuestObjective obj in objectives)
         {
             if (!obj.isCompleted)
             {
                 check = false;
                 obj.UpdateUI(player);
             }
+            else
+            {
+                obj.PrintUI(player);
+            }
         }
 
-        if(check) {
+        if (check)
+        {
             isCompleted = true;
-            titleMesh.enabled = false;
-            titleMesh.text = "";
-            
-            foreach(QuestObjective obj in objectives)
-            {
-                obj.Clear();
-            }
         }
     }
 }
