@@ -50,4 +50,9 @@ public class Quest
             isCompleted = true;
         }
     }
+
+    public void CompleteObjective(int index)
+    {
+        objectives[index].Complete();
+    }
 }

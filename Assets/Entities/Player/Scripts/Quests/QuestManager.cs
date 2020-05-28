@@ -20,17 +20,17 @@ public class QuestManager : MonoBehaviour
             0,
             "Gather Objects",
             new List<QuestObjective>() {
-                new CollectObjective(transform, 1, "Find mushrooms", 1, "strawberry"),
-                new CollectObjective(transform, 2, "Find invisibility feather", 1, "invisibilityFeather")
+                new CollectObjective(transform, 1, "Find mushrooms", 1, "candyHouseItem"),
+                new GiveObjective(transform, 2, "Interact with the Candy House")
             }
         ));
         quests.Add(new Quest(
             transform,
-            2,
-            "Gather Objects Part 2",
+            1,
+            "Gather Objects",
             new List<QuestObjective>() {
-                new CollectObjective(transform, 1, "Find mushrooms", 10, "strawberry"),
-                new CollectObjective(transform, 2, "Find invisibility feather", 6, "invisibilityFeather")
+                new CollectObjective(transform, 1, "Find mushrooms", 1, "strawberry"),
+                new CollectObjective(transform, 2, "Find invisibility feather", 1, "invisibilityFeather")
             }
         ));
         Debug.Log(quests.Count);
@@ -96,5 +96,10 @@ public class QuestManager : MonoBehaviour
                 count++;
             }
         }
+    }
+
+    public void CompleteQuestObjective(int index_quest, int index_objective)
+    {
+        quests[index_quest].CompleteObjective(index_objective);
     }
 }

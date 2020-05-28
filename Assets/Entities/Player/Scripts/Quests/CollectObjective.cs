@@ -41,4 +41,9 @@ public class CollectObjective : QuestObjective
     {
         text.text = description + " (" + (itemCount > targetItemCount ? targetItemCount : itemCount) + "/" + targetItemCount + ")";
     }
+
+    public override void Complete()
+    {
+        
+    }
 }

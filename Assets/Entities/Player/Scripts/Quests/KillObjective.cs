@@ -27,4 +27,9 @@ public class KillObjective : QuestObjective
     {
 
     }
+    
+    public override void Complete()
+    {
+        
+    }
 }

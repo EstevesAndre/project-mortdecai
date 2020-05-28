@@ -10,4 +10,5 @@ public abstract class QuestObjective
     public TextMeshProUGUI text;
     public abstract void UpdateUI(Player player);
     public abstract void PrintUI(Player player);
+    public abstract void Complete();
 }

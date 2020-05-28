@@ -59,6 +59,13 @@ public abstract class PlayerInteractableState : IState
                     Debug.Log("Interacting with an item");
                     owner.GetInventory().AddItem(isItem.item, 1);
                     Object.Destroy(toInteract);
+                } else {
+                    NPC isNPC = toInteract.GetComponent<NPC>();
+                    if (isNPC != null)
+                    {
+                        Debug.Log("Interacting with an NPC");
+                        isNPC.Interact(owner);
+                    }
                 }
                 owner.RemoveInteractableInRange(toInteract);
             }
