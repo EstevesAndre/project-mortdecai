@@ -18,7 +18,7 @@ public class QuestManager : MonoBehaviour
         quests.Add(new Quest(
             transform,
             0,
-            "Quest 1323121",
+            "Gather Objects",
             new List<QuestObjective>() {
                 new CollectObjective(transform, 1, "Find mushrooms", 1, "strawberry"),
                 new CollectObjective(transform, 2, "Find invisibility feather", 1, "invisibilityFeather")
@@ -26,8 +26,8 @@ public class QuestManager : MonoBehaviour
         ));
         quests.Add(new Quest(
             transform,
-            1,
-            "Quest ASDASD1",
+            2,
+            "Gather Objects Part 2",
             new List<QuestObjective>() {
                 new CollectObjective(transform, 1, "Find mushrooms", 10, "strawberry"),
                 new CollectObjective(transform, 2, "Find invisibility feather", 6, "invisibilityFeather")
