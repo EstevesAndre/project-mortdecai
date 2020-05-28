@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour, IInteractable
     public int questIndex;
     public int objectiveIndex;
     private bool hasInteractedSuccessfully;
+    public GameObject objectToDrop;
     
     public void Interact(Player player)
     {
@@ -28,6 +29,11 @@ public class NPC : MonoBehaviour, IInteractable
             {
                 hasInteractedSuccessfully = true;
                 questManager.CompleteQuestObjective(questIndex, objectiveIndex);
+
+                if(objectToDrop != null)
+                {
+                    objectToDrop.SetActive(true);
+                }
             }
             
         }
