@@ -28,6 +28,7 @@ public abstract class PlayerInteractableState : IState
 
     public void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("Entered trigger");
         IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
         if (interactable != null)
         {
@@ -60,6 +61,15 @@ public abstract class PlayerInteractableState : IState
                     owner.GetInventory().AddItem(isItem.item, 1);
                     Object.Destroy(toInteract);
                 } else {
+                    NPC isNPC = toInteract.GetComponent<NPC>();
+                    if (isNPC != null)
+                    {
+                        Debug.Log("Interacting with an NPC");
+                        isNPC.Interact(owner);
+                    }
+                }
+                else
+                {
                     NPC isNPC = toInteract.GetComponent<NPC>();
                     if (isNPC != null)
                     {
