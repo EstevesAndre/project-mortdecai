@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 5357906225518182478, guid: 914504fd2ff8c4a69abfd4ebb690140b, type: 3}
   type: 2
   description: A one-time use item that allows the creature to go unseen for a bit
+  name: invisibilityFeather

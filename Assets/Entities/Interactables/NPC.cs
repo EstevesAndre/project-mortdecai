@@ -4,31 +4,38 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour, IInteractable
 {
-    public Dictionary<string, int> itemsNeeded;
-    // public QuestManager questManager; TODO
+    public int numItemsNeeded;
+    public string collectionName;
+    public QuestManager questManager;
     public int questIndex;
-    public bool hasInteractedSuccessfully;
-
+    public int objectiveIndex;
+    private bool hasInteractedSuccessfully;
+    public GameObject objectToDrop;
+    
     public void Interact(Player player)
     {
         if (!hasInteractedSuccessfully)
         {
-            /*
-        int itemCount = 0;
-        foreach (InventorySlot item in player.GetInventory().container)
-        {
-            int actualValue;
-            if (itemsNeeded.TryGetValue(item.item.name, out actualValue) && actualValue == item.amount)
+            int itemCount = 0;
+            foreach (InventorySlot item in player.GetInventory().container)
             {
-                itemCount++;
+                if (item.item.name == collectionName)
+                {
+                    itemCount++;
+                }
             }
-        }
-        if (itemCount == itemsNeeded.Count)
-        {
-            hasInteractedSuccessfully = true;
-            // questManager.completeQuestObjective(questIndex); TODO
-        }
-            */
+
+            if (itemCount == numItemsNeeded)
+            {
+                hasInteractedSuccessfully = true;
+                questManager.CompleteQuestObjective(questIndex, objectiveIndex);
+
+                if(objectToDrop != null)
+                {
+                    objectToDrop.SetActive(true);
+                }
+            }
+            
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class JumpMushroom : MonoBehaviour {
 
     private Animator animator;
+    public float force = 1;
 
     private void Start() {
         animator = gameObject.GetComponent<Animator>();   
@@ -12,7 +13,7 @@ public class JumpMushroom : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         animator.SetTrigger("activated");
-        other.gameObject.GetComponent<PlayerMovement>().MushroomJump();
+        other.gameObject.GetComponent<PlayerMovement>().MushroomJump(force);
     }
 
 }

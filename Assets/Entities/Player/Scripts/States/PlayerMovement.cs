@@ -139,8 +139,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("Jumping", true);
         }
     }
-    public void MushroomJump() {
-        velocity.y = Mathf.Sqrt(jumpHeight * 2 * -2f * gravity);
+    public void MushroomJump(float force) {
+        velocity.y = Mathf.Sqrt(jumpHeight * 2 * force * -2f * gravity);
         animator.SetBool("Jumping", true);
     }
 

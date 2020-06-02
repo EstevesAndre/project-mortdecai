@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5679e0c883a24ca396d5283cbae36c0, type: 3}
-  m_Name: Berry
+  m_Script: {fileID: 11500000, guid: 63e5d4bcd70cc4fb9bf67298d0a0de3d, type: 3}
+  m_Name: Cupcake
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5357906225518182478, guid: 0d5ea2b39de6b6c41baf05776abdb8b8, type: 3}
-  type: 2
-  description: 
-  name: strawberry
+  prefab: {fileID: 5357906225518182478, guid: e40af583677fbb442a3a9d2db5a7959a, type: 3}
+  type: 1
+  description: CUPCAKE
+  name: candyHouseItem
