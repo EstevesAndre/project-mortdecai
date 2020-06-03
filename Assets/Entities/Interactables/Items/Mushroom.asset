@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63e5d4bcd70cc4fb9bf67298d0a0de3d, type: 3}
-  m_Name: Key
+  m_Name: Mushroom
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5357906225518182478, guid: a66633c847e344deeb6d6bfa77f7427b, type: 3}
+  prefab: {fileID: 5357906225518182478, guid: 144a07d5f0a364645952e4bd25cc22fa, type: 3}
   type: 1
-  description: A key to somewhere I don't remember
-  name: key
+  description: yummy
+  name: mushroomPortal

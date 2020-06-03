@@ -69,6 +69,13 @@ public abstract class PlayerInteractableState : IState
                         Debug.Log("Interacting with an NPC");
                         isNPC.Interact(owner);
                     }
+
+                    Lever isLever = toInteract.GetComponent<Lever>();
+                    if (isLever != null)
+                    {
+                        Debug.Log("Interacting with Lever");
+                        isLever.Interact();
+                    }
                 }
                 owner.RemoveInteractableInRange(toInteract);
             }
