@@ -21,7 +21,7 @@ public class QuestManager : MonoBehaviour
             "Gather Objects",
             new List<QuestObjective>() {
                 new CollectObjective(transform, 1, "Find mushrooms to open the portal", 3, "mushroomPortal"),
-                new CollectObjective(transform, 2, "Collect all Candy House items", 3, "candyHouseItem"),
+                new CollectObjective(transform, 2, "Collect all Candy House items", 2, "candyHouseItem"),
                 new GiveObjective(transform, 3, "Interact with the Candy House")
             }
         ));

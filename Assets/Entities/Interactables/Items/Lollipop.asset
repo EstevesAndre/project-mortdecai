@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 5357906225518182478, guid: 3fdb064574a2b48b4b41c7abad2aa44b, type: 3}
   type: 1
   description: One of the missing lollipops from the chocolate house
+  name: candyHouseItem

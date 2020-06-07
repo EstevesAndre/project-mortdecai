@@ -25,6 +25,12 @@ public class InventoryObject : ScriptableObject
             container.Add(new InventorySlot(_item, _amount));
         }
     }
+
+    public void ConsumeItem(InventorySlot inventorySlot)
+    {
+        // TODO
+        return;
+    }
 }
 
 [System.Serializable]
