@@ -103,3 +103,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b41c1e9ebdf95045acdc91db48cf0a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frequency: 0.1

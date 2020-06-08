@@ -5,15 +5,15 @@ using UnityEngine;
 public class Scaler : MonoBehaviour {
 
 private float mSize = 0.0f;
-private float inc = 1.0f;
+public float frequency;
     void Start() {
-        InvokeRepeating("ScaleUp",0.0f,0.1f);
+        InvokeRepeating("ScaleUp",0.0f,frequency);
     }
 
     void ScaleUp() {
         if(mSize >= 100.0f) {
             CancelInvoke("ScaleUp");
-            InvokeRepeating("ScaleDown",0.0f,0.1f);
+            InvokeRepeating("ScaleDown",0.0f,frequency);
         }
         GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,mSize++);
         GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1,mSize++);
@@ -27,7 +27,7 @@ private float inc = 1.0f;
     void ScaleDown() {
         if(mSize <= 0.0f) {
             CancelInvoke("ScaleDown");
-            InvokeRepeating("ScaleUp",0.0f,0.1f);
+            InvokeRepeating("ScaleUp",0.0f,frequency);
         }
         GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,mSize--);
         GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1,mSize--);
