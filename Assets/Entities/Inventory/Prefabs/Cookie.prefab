@@ -92,7 +92,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 13.65
+  m_fontSize: 13.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 36.41417, y: 34.726364, z: 0, w: 0}
+  m_margin: {x: 36.29603, y: 34.043625, z: 0.43645477, w: 0.8901367}
   m_textInfo:
     textComponent: {fileID: 5925603092792140205}
     characterCount: 1
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 6194491833282421888}
   - component: {fileID: 2286598130405683458}
   m_Layer: 5
-  m_Name: Key
+  m_Name: Cookie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,13 +215,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.81960785, b: 0.5882353, a: 1}
+  m_Color: {r: 0.8867924, g: 0.5659045, b: 0.08784264, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c7d0440d4f2ae8c438e411273330c7bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00d6189786e9f9a42a76526d587e7422, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

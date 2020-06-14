@@ -11,6 +11,7 @@ public class NPC : MonoBehaviour, IInteractable
     public int objectiveIndex;
     private bool hasInteractedSuccessfully;
     public GameObject objectToDrop;
+    public GameObject ObjectToShow;
 
     public void Interact(Player player)
     {
@@ -22,6 +23,12 @@ public class NPC : MonoBehaviour, IInteractable
                 if (item.item.name == collectionName)
                 {
                     itemCount++;
+                }
+
+                if (item.item.name == collectionName && item.amount == numItemsNeeded)
+                {
+                    itemCount = numItemsNeeded;
+                    break;
                 }
             }
 
@@ -40,23 +47,20 @@ public class NPC : MonoBehaviour, IInteractable
                     }
                 }
 
-                
+                if(ObjectToShow != null)
+                {
+                    ObjectToShow.SetActive(true);
+                }
 
                 if(objectToDrop != null)
                 {
                     objectToDrop.SetActive(true);
                 }
             }
-        }
-    }
-
-    private IEnumerator ShowCollectables(float waitTime)
-    {
-        
-        for(int i = 0; i < numItemsNeeded; i++)
-        {
-
-            yield return new WaitForSeconds(waitTime);
+            else
+            {
+                Debug.Log("Missing parts!");
+            }
         }
     }
 }
