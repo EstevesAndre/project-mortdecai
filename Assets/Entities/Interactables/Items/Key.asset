@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 5357906225518182478, guid: a66633c847e344deeb6d6bfa77f7427b, type: 3}
   type: 1
   description: A key to somewhere I don't remember
+  name: key

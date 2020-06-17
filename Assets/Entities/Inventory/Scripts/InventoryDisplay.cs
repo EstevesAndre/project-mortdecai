@@ -31,16 +31,24 @@ public class InventoryDisplay : MonoBehaviour
         }
     }
 
+    private void Erase()
+    {
+        itemsDisplayed.Clear();
+
+        foreach(Transform child in transform) 
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+
     private void UpdateDisplay()
     {
-        for (int i = 0; i < inventory.container.Count; i++)
+        Erase();
+
+        for (int i = 0, j = 0; i < inventory.container.Count; i++)
         {
-            if (itemsDisplayed.ContainsKey(inventory.container[i]))
-            {
-                itemsDisplayed[inventory.container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.container[i].amount.ToString("n0");
-            }
-            else
-            {
+            if (inventory.container[i].amount != 0) {
                 InstantiateItem(i);
             }
         }
@@ -49,7 +57,7 @@ public class InventoryDisplay : MonoBehaviour
     private void InstantiateItem(int itemIndex)
     {
         var obj = Instantiate(inventory.container[itemIndex].item.prefab, Vector3.zero, Quaternion.identity, transform);
-        obj.GetComponent<RectTransform>().localPosition = GetPosition(itemIndex);
+        obj.GetComponent<RectTransform>().localPosition = GetPosition(itemsDisplayed.Count);
         obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.container[itemIndex].amount.ToString("n0");
         itemsDisplayed.Add(inventory.container[itemIndex], obj);
     }

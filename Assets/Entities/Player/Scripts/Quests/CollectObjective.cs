@@ -26,7 +26,7 @@ public class CollectObjective : QuestObjective
         foreach (InventorySlot item in player.GetInventory().container)
         {
             if (item.item.name == itemToCollect)
-                itemCount = item.amount;
+                itemCount += item.amount;
         }
 
         if (itemCount >= targetItemCount)
