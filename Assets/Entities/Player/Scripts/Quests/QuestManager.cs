@@ -30,8 +30,8 @@ public class QuestManager : MonoBehaviour
             1,
             "Gather Objects",
             new List<QuestObjective>() {
-                new CollectObjective(transform, 1, "Find mushrooms", 1, "strawberry"),
-                new CollectObjective(transform, 2, "Find invisibility feather", 1, "invisibilityFeather")
+                new CollectObjective(transform, 1, "Find tea bottles to open the portal", 3, "Teabag"),
+                new CollectObjective(transform, 2, "Find the diving suit", 1, "divingSuit")
             }
         ));
         Debug.Log(quests.Count);

@@ -10,14 +10,14 @@ public class PlayerPortal : MonoBehaviour {
     private bool possible;
     public GameObject check;
     private Animator animator;
-    private BoxCollider boxCollider;
-    private bool finished;
-    public Vector3 positionToGo;
-    public int zoneToGo;
+    public BoxCollider barrier;
+    public SphereCollider npcSphere;
+    public int zone1;
+    public int zone2;
 
     private void Start() {
         animator = gameObject.GetComponent<Animator>();
-        boxCollider = gameObject.GetComponent<BoxCollider>();
+        npcSphere = gameObject.GetComponent<SphereCollider>();
         possible = false;
         limit = transform.position.x + 1;
     }
@@ -28,26 +28,26 @@ public class PlayerPortal : MonoBehaviour {
 
         if (possible)
         {
-            boxCollider.enabled = false;
+            barrier.enabled = false;
+            npcSphere.enabled = false;
             animator.SetTrigger("Interact");
         }
     }
 
     public void Update()
     {
-        if (finished) return;
+        if (possible) return;
 
-        if (possible)
-        {
-            if (player != null && player.transform.position.x > limit)
-            {
-                Debug.Log("TELETRANSPORT");
-                questManager.setZone(zoneToGo);
-                player.transform.position = positionToGo;
-                finished = true;
-            }
-        } else {
-            CheckNextLevelBarrier();
+        CheckNextLevelBarrier();
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(possible && other.CompareTag("Mortdecai")) {
+             if(questManager.zone == zone1) {
+                    questManager.setZone(zone2);
+                } else {
+                    questManager.setZone(zone1);
+                }
         }
     }
 }
